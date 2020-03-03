@@ -9,14 +9,30 @@ if [ "$#" -ne 1 ]; then
  echo "Le nombre d'arguments est invalide"
 fi
 
-# Ping vers la machine donnée en paramètre
-ping -c1  $1 1>/dev/null
-if [ "$?" = 0 ]
+# Ping vers toutes les autres machine si serveur
+if [ "$1" = $SERVEUR_NFS ]
 then
-  echo "Ping vers cible :"
-  echo "Ping vers $1 réussi"
+  while IFS= read -r line
+    do
+      nomActuel=$(echo $line | cut -d ' ' -f 2)
+      ping -c1  $nomActuel 1>/dev/null
+      if [ "$?" = 0 ]
+      then
+        echo -e "Ping vers $nomActuel : \033[32m réussi \033[0m"
+      else
+        echo -e "Ping vers $nomActuel : \033[31m échoué \033[0m"
+      fi
+  done < "$MACHINE_LISTE"
+
+# Sinon ping vers le serveur
 else
-  echo "Ping vers $1 échoué"
+  ping -c1  $SERVEUR_NFS 1>/dev/null
+  if [ "$?" = 0 ]
+  then
+    echo -e "Ping vers $SERVEUR_NFS : \033[32m réussi \033[0m"
+  else
+    echo -e "Ping vers $SERVEUR_NFS : \033[31m échoué \033[0m"
+  fi
 fi
 
 # Vérification de la configuration réseau
