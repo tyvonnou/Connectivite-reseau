@@ -10,7 +10,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Ping vers toutes les autres machine si serveur
-if [ "$1" = $SERVEUR_NFS ]
+if [ "$1" = "serveur" ]
 then
   while IFS= read -r line
     do
