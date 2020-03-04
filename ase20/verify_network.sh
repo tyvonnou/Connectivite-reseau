@@ -26,12 +26,12 @@ then
 
 # Sinon ping vers le serveur
 else
-  ping -c1  $SERVEUR_NFS 1>/dev/null
+  ping -c1  serveur 1>/dev/null
   if [ "$?" = 0 ]
   then
-    echo -e "Ping vers $SERVEUR_NFS : \033[32m réussi \033[0m"
+    echo -e "Ping vers serveur : \033[32m réussi \033[0m"
   else
-    echo -e "Ping vers $SERVEUR_NFS : \033[31m échoué \033[0m"
+    echo -e "Ping vers serveur : \033[31m échoué \033[0m"
   fi
 fi
 
